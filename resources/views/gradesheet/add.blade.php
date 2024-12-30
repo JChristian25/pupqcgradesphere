@@ -45,11 +45,11 @@
 
             <div class="ms-auto">
 
-                <a id="" class="btn btn-success">
+                <a id="save-temp-btn" class="btn btn-success">
                     <span>Save</span>
                 </a>
 
-                <a id="save-gradesheet-btn" class="btn btn-primary">
+                <a id="for-checking-btn" class="btn btn-primary">
                     <span>
 
                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-progress-down"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 20.777a8.942 8.942 0 0 1 -2.48 -.969" /><path d="M14 3.223a9.003 9.003 0 0 1 0 17.554" /><path d="M4.579 17.093a8.961 8.961 0 0 1 -1.227 -2.592" /><path d="M3.124 10.5c.16 -.95 .468 -1.85 .9 -2.675l.169 -.305" /><path d="M6.907 4.579a8.954 8.954 0 0 1 3.093 -1.356" /><path d="M12 9v6" /><path d="M15 12l-3 3l-3 -3" /></svg>
@@ -70,42 +70,38 @@
                     <div class="col-md-6">
                         <div class="d-flex flex-row gap-3">
                             <div class="col-md-8">
-                                <label class="form-label" for="select-users">Subject Description</label>
-                                <input class="form-control" id="select-course" placeholder="Select Subject">
-                                {{-- <select type="text" class="form-control" id="select-course" value="">
-                                    <option value="" disabled selected>Select Course</option>
-                                    <option value="INTE 40163">Capstone 1</option>
-                                </select> --}}
+                                <label class="form-label" for="g_subject">Subject Description</label>
+                                <input class="form-control" id="g_subject" placeholder="...">
                             </div>
                             <div class="col-md-4 d-flex flex-column justify-content-end">
-                                <label class="form-label" for="code_number">Subject Number</label>
-                                <input id="code_number" class="form-control" disabled placeholder="Subject Number">
+                                <label class="form-label" for="subject_code">Subject Number</label>
+                                <input id="subject_code" class="form-control" placeholder="Subject Code"> <!-- To add: Advanced Selector -->
                             </div>
                         </div>
                     </div>
                     <div class="col-md-4 ms-3">
-                        <label class="form-label" for="select-users">Year & Section</label>
-                        <input class="form-control" id="year-section" placeholder="Year & Section">
+                        <label class="form-label" for="year_and_section">Year & Section</label>
+                        <input class="form-control" id="year_and_section" placeholder="Year & Section">
                     </div>
                     <div class="col-md-1">
-                        <label class="form-label" for="select-users">Units</label>
-                        <input class="form-control" id="units" placeholder="Units">
+                        <label class="form-label" for="g_subject_units">Units</label>
+                        <input class="form-control" id="g_subject_units" placeholder="Units">
                     </div>
                 </div>
 
                 <div class="d-flex flex-row gap-3 mt-3">
 
                     <div class="col-lg-2">
-                        <label class="form-label" for="select-users">Time</label>
-                        <input class="form-control" id="time" placeholder="_:__ AM/PM - _:__ AM/PM">
+                        <label class="form-label" for="block_time">Time</label>
+                        <input class="form-control" id="block_time" placeholder="_:__ AM/PM - _:__ AM/PM">
                     </div>
                     <div class="col-lg-3">
-                        <label class="form-label" for="select-users">Room</label>
-                        <input class="form-control" id="room" placeholder="ACAD 103">
+                        <label class="form-label" for="block_room">Room</label>
+                        <input class="form-control" id="block_room" placeholder="ACAD 103">
                     </div>
                     <div class="col-lg-3">
-                        <label class="form-label" for="select-users">Semester</label>
-                        <select type="text" class="form-control" id="select-semester" value="">
+                        <label class="form-label" for="g_subject_semester">Semester</label>
+                        <select type="text" class="form-control" id="g_subject_semester" value="">
                             <option value="" disabled selected>Select Semester</option>
                             <option value="1st Semester">1st Semester</option>
                             <option value="2nd Semester">2nd Semester</option>
@@ -113,8 +109,8 @@
                         </select>
                     </div>
                     <div class="col-lg-3">
-                        <label class="form-label" for="select-users">School Year</label>
-                        <input class="form-control" id="school-year" placeholder="2021-2022">
+                        <label class="form-label" for="school_year">School Year</label>
+                        <input class="form-control" id="school_year" placeholder="2021-2022">
                     </div>
 
                 </div>
@@ -169,9 +165,9 @@
                             <tr>
 
                                 <td>{{ $student->student_number }}</td>
-                                <td>{{ $student->last_name }}, {{ $student->first_name }} {{ $student->middle_name }}</td>
-                                <td class="text-center">{{ $student->program }}</td>
-                                <td class="text-center">{{ $student->curriculum }}</td>
+                                <td>{{ $student->student_lname }}, {{ $student->student_fname }} {{ $student->student_mname }}</td>
+                                <td class="text-center">{{ $student->student_program }}</td>
+                                <td class="text-center">{{ $student->student_curriculum }}</td>
                                 <td class="d-flex flex-row justify-content-center">
                                     <button id="addStudent" class="btn btn-warning">Add</button>
                                 </td>
@@ -369,27 +365,27 @@
             //     });
             // }
 
-            if (window.TomSelect) {
-                new TomSelect(eg, {
-                    copyClassesToDropdown: false,
-                    dropdownParent: 'body',
-                    controlInput: '<input>',
-                    render: {
-                        item: function (data, escape) {
-                            if (data.customProperties) {
-                                return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
-                            }
-                            return '<div>' + escape(data.text) + '</div>';
-                        },
-                        option: function (data, escape) {
-                            if (data.customProperties) {
-                                return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
-                            }
-                            return '<div>' + escape(data.text) + '</div>';
-                        },
-                    },
-                });
-            }
+            // if (window.TomSelect) {
+            //     new TomSelect(eg, {
+            //         copyClassesToDropdown: false,
+            //         dropdownParent: 'body',
+            //         controlInput: '<input>',
+            //         render: {
+            //             item: function (data, escape) {
+            //                 if (data.customProperties) {
+            //                     return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+            //                 }
+            //                 return '<div>' + escape(data.text) + '</div>';
+            //             },
+            //             option: function (data, escape) {
+            //                 if (data.customProperties) {
+            //                     return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+            //                 }
+            //                 return '<div>' + escape(data.text) + '</div>';
+            //             },
+            //         },
+            //     });
+            // }
             //End Advanced Select Tag
 
 
@@ -401,18 +397,19 @@
 
             });
 
-            $(document).on('click', '#save-gradesheet-btn', function () {
+            $(document).on('click', '#for-checking-btn', function () {
 
                 // Collecting form data from fields outside the table
                 // let course = $('#select-course').find('option:selected').text();
-                let course = $('#select-course').val();
-                let codeNumber = $('#code_number').val();
-                let yearSection = $('#year-section').val();
-                let units = $('#units').val();
-                let time = $('#time').val();
-                let room = $('#room').val();
-                let semester = $('#select-semester').find('option:selected').val();
-                let schoolYear = $('#school-year').val();
+                let g_subject = $('#g_subject').val();
+                let subject_code = $('#subject_code').val();
+                let year_and_section = $('#year_and_section').val();
+                let g_subject_units = $('#g_subject_units').val();
+                let block_time = $('#block_time').val();
+                let block_room = $('#block_room').val();
+                let g_subject_semester = $('#g_subject_semester').find('option:selected').val();
+                let school_year = $('#school_year').val();
+                let g_status = 'For Checking';
 
                 // Array to store students' grades
                 let students_in_gradesheet = [];
@@ -439,15 +436,16 @@
 
                 // Create FormData object to prepare for AJAX
                 let formData = new FormData();
-                formData.append('course', course);
-                formData.append('codeNumber', codeNumber);
-                formData.append('yearSection', yearSection);
-                formData.append('units', units);
-                formData.append('time', time);
-                formData.append('room', room);
-                formData.append('semester', semester);
-                formData.append('schoolYear', schoolYear);
+                formData.append('g_subject', g_subject);
+                formData.append('subject_code', subject_code);
+                formData.append('year_and_section', year_and_section);
+                formData.append('g_subject_units', g_subject_units);
+                formData.append('block_time', block_time);
+                formData.append('block_room', block_room);
+                formData.append('g_subject_semester', g_subject_semester);
+                formData.append('school_year', school_year);
                 formData.append('students', JSON.stringify(students_in_gradesheet));  // Add students as JSON
+                formData.append('g_status', g_status);
 
                 for (let pair of formData.entries()) {
                     console.log(pair[0]+ ': ' + pair[1]);
@@ -499,6 +497,105 @@
                 });
             });
 
+            $(document).on('click', '#save-temp-btn', function () {
+
+                // Collecting form data from fields outside the table
+                // let course = $('#select-course').find('option:selected').text();
+                let g_subject = $('#g_subject').val();
+                let subject_code = $('#subject_code').val();
+                let year_and_section = $('#year_and_section').val();
+                let g_subject_units = $('#g_subject_units').val();
+                let block_time = $('#block_time').val();
+                let block_room = $('#block_room').val();
+                let g_subject_semester = $('#g_subject_semester').find('option:selected').val();
+                let school_year = $('#school_year').val();
+                let g_status = 'Unfinished';
+
+                // Array to store students' grades
+                let students_in_gradesheet = [];
+
+                // Collecting data from each row in the students table
+                $('#studentsGradesheetTable tbody tr').each(function() {
+                    let row = $(this);
+
+                    let id = $(row.find("td")[7]).text();
+                    let firstGradeValue = row.find('.firstgrading').val();
+                    let secondGradeValue = row.find('.secondgrading').val();
+                    let finalGradeValue = row.find('.finalgrading').val();
+                    let remarksValue = row.find('.remarks select').val();
+
+                    // Append the student data to the array
+                    students_in_gradesheet.push({
+                        id: id,
+                        firstGrade: firstGradeValue,
+                        secondGrade: secondGradeValue,
+                        finalGrade: finalGradeValue,
+                        remarks: remarksValue
+                    });
+                });
+
+                // Create FormData object to prepare for AJAX
+                let formData = new FormData();
+                formData.append('g_subject', g_subject);
+                formData.append('subject_code', subject_code);
+                formData.append('year_and_section', year_and_section);
+                formData.append('g_subject_units', g_subject_units);
+                formData.append('block_time', block_time);
+                formData.append('block_room', block_room);
+                formData.append('g_subject_semester', g_subject_semester);
+                formData.append('school_year', school_year);
+                formData.append('students', JSON.stringify(students_in_gradesheet));  // Add students as JSON
+                formData.append('g_status', g_status);
+
+                for (let pair of formData.entries()) {
+                    console.log(pair[0]+ ': ' + pair[1]);
+                }
+
+                // AJAX request to submit the data
+                $.ajax({
+                    url: '{{ route("gradesheets.store") }}',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')  // Adding CSRF token manually
+                    },
+                    success: function(response) {
+
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Gradesheet added successfully',
+                            icon: 'success',
+                            confirmButtonText: 'Continue'
+                        }).then((result) => {
+
+                            window.location.reload();
+
+                        });
+
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error in request:', error);
+                        // Log detailed error information
+                        console.error('Status:', status);
+                        console.error('Status Code:', xhr.status);
+                        console.error('Response Text:', xhr.responseText);
+
+                        Swal.fire({
+                            title: 'Oops!',
+                            text: 'Error adding gradesheet :(',
+                            icon: 'error',
+                            confirmButtonText: 'Continue'
+                        }).then((result) => {
+
+                            window.location.reload();
+
+                        });
+
+                    }
+                });
+                });
 
         });
 

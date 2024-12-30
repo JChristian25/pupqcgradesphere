@@ -10,4 +10,10 @@ class Subject extends Model
     
     use SoftDeletes;
     protected $dates = ['deleted_at'];
+
+    protected $fillable = [
+        'subject_code',
+        'subject_description',
+        'subject_units'
+    ];
 }

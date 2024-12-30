@@ -48,11 +48,13 @@ Route::prefix('gradesheet')->group(function () {
 Route::prefix('courses')->group(function () {
     Route::get('/', [CoursesController::class, 'index'])->name('courses');
     Route::get('/add', [CoursesController::class, 'add'])->name('courses.add');
+    Route::post('/store', [CoursesController::class, 'store'])->name('course.store');
 });
 
 Route::prefix('subjects')->group(function () {
     Route::get('/', [SubjectsController::class, 'index'])->name('subjects');
     Route::get('/add', [SubjectsController::class, 'add'])->name('subjects.add');
+    Route::post('/store', [SubjectsController::class, 'store'])->name('subject.store');
 });
 
 Route::prefix('curriculum')->group(function () {

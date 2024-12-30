@@ -33,62 +33,108 @@
 
   <div class="card">
         <div class="card-body">
-            <form method="POST" action="{{ route('students.store') }}" novalidate>
-                @csrf
-                <label class="form-label" for="lastname">Student No.</label>
-                <div class="row mb-3">
-                    <div class="col-md-12">
-                        <input class="form-control" name="student_number" placeholder="2021-00027-CM-0">
-                    </div>
+        <form method="POST" action="{{ route('students.store') }}" novalidate>
+            @csrf
+            <div class="flex gap-1 my-2">
+                <div class="col-md-4">
+                    <label class="form-label" for="student_number">Student Number</label>
+                    <input type="text" name="student_number" class="form-control" id="student_number" placeholder="e.g. 2024-00609-CM-0">
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label" for="student_fname">First Name</label>
+                    <input type="text" name="student_fname" class="form-control" id="student_fname" placeholder="First Name">
+                </div>
+                
+                <div class="col-sm-1">
+                    <label class="form-label" for="student_mname">Middle Name</label>
+                    <input type="text" name="student_mname" class="form-control" id="student_mname" placeholder="Middle Name">
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label" for="student_lname">Last Name</label>
+                    <input type="text" name="student_lname" class="form-control" id="student_lname" placeholder="Last Name">
+                </div>
+            </div>
+            
+            <div class="flex gap-1 my-2">
+                <div class="col-md-1">
+                    <label class="form-label" for="student_suffix">Suffix</label>
+                    <input type="text" name="student_suffix" class="form-control" id="student_suffix" placeholder="Suffix">
+                </div>
+                
+                <div class="col-md-3">
+                    <label class="form-label" for="has_hscard">Has Highschool Card</label>
+                    <input type="text" name="has_hscard" class="form-control" id="has_hscard" placeholder="Suffix">
+                </div>
+                
+                <div class="col-md-2">
+                    <label class="form-label" for="has_birthcert">Has Birth Certificate</label>
+                    <select name="has_birthcert" class="form-select" id="has_birthcert">
+                        <option selected>Open this select menu</option>
+                        <option value="None">None</option>
+                        <option value="Xerox">Xerox</option>
+                        <option value="Original">Original</option>
+                    </select>
                 </div>
 
-                <label class="form-label" for="lastname">Student Name</label>
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <input class="form-control" name="firstname" placeholder="First Name">
-                    </div>
-                    <div class="col-md-4">
-                        <input class="form-control" name="middlename" placeholder="Middle Name/Initial">
-                    </div>
-                    <div class="col-md-4">
-                        <input class="form-control" name="lastname" placeholder="Last Name">
-                    </div>
+                <div class="col-md-1">
+                    <label class="form-label" for="has_f137">Has f137</label>
+                    <select name="has_f137" class="form-select" id="has_f137">
+                        <option selected>Open this select menu</option>
+                        <option value="None">None</option>
+                        <option value="Transferee">Transferee</option>
+                    </select>
                 </div>
 
-                <div class="row mb-3">
-                    <div class="col-md-6">
-                        <div class="form-label">Course</div>
-                        <input class="form-control" name="course" placeholder="Course">
+                <div class="col-md-4">
+                    <label class="form-label" for="honorable_dismissal">Honorable Dismissal</label>
+                    <input type="text" name="honorable_dismissal" class="form-control" id="honorable_dismissal" placeholder="Suffix">
+                </div>
+            </div>
 
-                        {{-- <select name="course" class="form-control">
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                        </select> --}}
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="form-label">Curriculum</div>
-                        <input class="form-control" name="curriculum" placeholder="Curriculum">
-                        {{-- <select name="curriculum" class="form-control">
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                        </select> --}}
-                    </div>
+            <div class="flex gap-1 my-2">
+                <div class="col-md-4">
+                    <label class="form-label" for="with_tor">With TOR?</label>
+                    <select name="with_tor" class="form-select" id="with_tor">
+                        <option selected>Open this select menu</option>
+                        <option value="None">None</option>
+                        <option value="Graduate">Graduate</option>
+                        <option value="Undergraduate">Undergraduate</option>
+                    </select>
                 </div>
 
-                <div>
-                    <button type="submit" class="btn btn-primary">
-                        <span>
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M16 19h6" /><path d="M19 16v6" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /></svg>
-                        </span>
-                        <span>
-                            Add
-                        </span>
-                    </button>
+                <div class="col-md-4">
+                    <label class="form-label" for="with_diploma">With Diploma?</label>
+                    <input type="text" name="with_diploma" class="form-control" id="with_diploma" placeholder="Suffix">
                 </div>
-            </form>
+
+            </div>
+
+            <div class="flex gap-1 my-2">
+                <div class="col-md-4">
+                    <label class="form-label" for="student_program">Program</label>
+                    <input type="text" name="student_program" class="form-control" id="student_program" placeholder="Program">
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label" for="student_curriculum">Curriculum</label>
+                    <input type="text" name="student_curriculum" class="form-control" id="student_curriculum" placeholder="Curriculum">
+                </div>
+            </div>
+
+            <div>
+                <button type="submit" class="btn btn-primary">
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M16 19h6" /><path d="M19 16v6" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /></svg>
+                    </span>
+                    <span>
+                        Add
+                    </span>
+                </button>
+            </div>
+        </form>
+
         </div>
    </div>
 

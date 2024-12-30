@@ -57,61 +57,60 @@
         <div class="card-body">
 
             <div class="col-md-12">
+
                 <div class="d-flex flex-row gap-3">
                     <div class="col-md-6">
                         <div class="d-flex flex-row gap-3">
                             <div class="col-md-8">
-                                <label class="form-label" for="select-course">Course Description</label>
-                                <select type="text" class="form-control" id="select-course" disabled>
-                                    <option value="" disabled {{ !$gradesheet->course ? 'selected' : '' }}>Select Course</option>
-                                    <option value="INTE 40163" {{ $gradesheet->course === 'INTE 40163' ? 'selected' : '' }}>Capstone 1</option>
-                                </select>
-
+                                <label class="form-label" for="g_subject">Subject Description</label>
+                                <input class="form-control" id="g_subject" value="{{ $gradesheet->g_subject }}" disabled>
                             </div>
                             <div class="col-md-4 d-flex flex-column justify-content-end">
-                                <label class="form-label" for="code_number">Code Number</label>
-                                <input id="code_number" class="form-control" disabled placeholder="Code Number" value="" disabled>
+                                <label class="form-label" for="subject_code">Subject Number</label>
+                                <input id="subject_code" class="form-control" value="{{ $gradesheet->g_subject_code }}" disabled> <!-- To add: Advanced Selector -->
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-4 ms-3">
-                        <label class="form-label" for="year-section">Year & Section</label>
-                        <input class="form-control" id="year-section" placeholder="Year & Section" value="{{ $gradesheet->year_and_section }}" disabled>
+                        <label class="form-label" for="year_and_section">Year & Section</label>
+                        <input class="form-control" id="year_and_section" value="{{ $gradesheet->year_and_section }}" disabled>
                     </div>
                     <div class="col-md-1">
-                        <label class="form-label" for="units">Units</label>
-                        <input class="form-control" id="units" placeholder="Units" value="{{ $gradesheet->units }}" disabled>
+                        <label class="form-label" for="g_subject_units">Units</label>
+                        <input class="form-control" id="g_subject_units" value="{{ $gradesheet->g_subject_units }}" disabled>
                     </div>
                 </div>
 
                 <div class="d-flex flex-row gap-3 mt-3">
+
                     <div class="col-lg-2">
-                        <label class="form-label" for="time">Time</label>
-                        <input class="form-control" id="time" placeholder="_:__ AM/PM - _:__ AM/PM" value="{{ $gradesheet->time }}" disabled>
+                        <label class="form-label" for="block_time">Time</label>
+                        <input class="form-control" id="block_time" value="{{ $gradesheet->block_time }}" disabled>
                     </div>
                     <div class="col-lg-3">
-                        <label class="form-label" for="room">Room</label>
-                        <input class="form-control" id="room" placeholder="ACAD 103" value="{{ $gradesheet->room }}" disabled>
+                        <label class="form-label" for="block_room">Room</label>
+                        <input class="form-control" id="block_room" value="{{ $gradesheet->block_room }}" disabled>
                     </div>
                     <div class="col-lg-3">
                         <label class="form-label" for="select-semester" >Semester</label>
                         <select type="text" class="form-control" id="select-semester" disabled>
-                            <option value="" disabled {{ !$gradesheet->semester ? 'selected' : '' }}>Select Semester</option>
-                            <option value="1st Semester" {{ $gradesheet->semester === '1st Semester' ? 'selected' : '' }}>1st Semester</option>
-                            <option value="2nd Semester" {{ $gradesheet->semester === '2nd Semester' ? 'selected' : '' }}>2nd Semester</option>
-                            <option value="Summer" {{ $gradesheet->semester === 'Summer' ? 'selected' : '' }}>Summer</option>
+                            <option value="" disabled {{ !$gradesheet->g_subject_semester ? 'selected' : '' }}>Select Semester</option>
+                            <option value="1st Semester" {{ $gradesheet->g_subject_semester === '1st Semester' ? 'selected' : '' }}>1st Semester</option>
+                            <option value="2nd Semester" {{ $gradesheet->g_subject_semester === '2nd Semester' ? 'selected' : '' }}>2nd Semester</option>
+                            <option value="Summer" {{ $gradesheet->g_subject_semester === 'Summer' ? 'selected' : '' }}>Summer</option>
                         </select>
                     </div>
                     <div class="col-lg-3">
-                        <label class="form-label" for="school-year">School Year</label>
-                        <input class="form-control" id="school-year" placeholder="2021-2022" value="{{ $gradesheet->school_year }}" disabled>
+                        <label class="form-label" for="school_year">School Year</label>
+                        <input class="form-control" id="school_year" value="{{ $gradesheet->school_year }}" disabled>
                     </div>
+
                 </div>
+
             </div>
 
-
         </div>
+
 
     </div>
 
@@ -153,7 +152,7 @@
 
                             <tr>
                                 <td>{{ $student->student_number }}</td>
-                                <td>{{ $student->last_name }}, {{ $student->first_name }} {{ $student->middle_name }}</td>
+                                <td>{{ $student->student_lname }}, {{ $student->student_fname }} {{ $student->student_mname }}</td>
                                 <td class="text-center">
                                     <input class="form-control text-center firstgrading" value="{{ $student->first_grading }}" disabled>
                                 </td>

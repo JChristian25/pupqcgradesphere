@@ -38,7 +38,7 @@
 
             <div class="flex-row ms-auto">
 
-                <a href="{{route('subjects.add')}}" class="btn btn-primary ms-auto" data-bs-toggle="modal" data-bs-target="#addSubjects">
+                <a href="{{route('subjects.add')}}" class="btn btn-primary ms-auto">
                     <span>
                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-description"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M9 17h6" /><path d="M9 13h6" /></svg>                    </span>
                     <span>Add Subjects</span>
@@ -57,7 +57,9 @@
                     <thead>
 
                         <tr>
-
+                          <th>Subject Code</th>
+                          <th>Desription</th>
+                          <th>Units</th>
                             
 
                         </tr>
@@ -65,8 +67,13 @@
                     </thead>
 
                     <tbody>
-
-                        
+                      @foreach ($subjects as $subject)
+                        <tr>
+                          <td>{{$subject->subject_code}}</td>
+                          <td>{{$subject->subject_description}}</td>
+                          <td>{{$subject->subject_units}}</td>
+                        </tr>
+                      @endforeach
                     </tbody>
                 </table>
 
@@ -75,40 +82,6 @@
         </div>
 
     </div>
-
-    <div class="modal modal-blur fade" id="addSubjects" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">Add Subjects</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <div class="flex gap-2">
-                    <div class="col-md-3">
-                      <label class="form-label" for="select-users">Subject Code</label>
-                      <input class="form-control" id="units" placeholder="Code">
-                    </div>
-
-                    <div class="col-md-3">
-                      <label class="form-label" for="select-users">Units</label>
-                      <input class="form-control" id="units" placeholder="Code">
-                    </div>
-                  </div>
-
-                  <div class="flex gap-2">
-                    <div class="col-md-8">
-                      <label class="form-label" for="select-users">Name</label>
-                      <input class="form-control" id="units" placeholder="Description">
-                    </div>
-                  </div>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                  <button id="import-btn" class="btn btn-primary">Add</button>
-              </div>
-          </div>
-      </div>
   </div>
 
 </div>

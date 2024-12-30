@@ -59,8 +59,8 @@
 
                         <tr>
 
-                            <th>Course</th>
-                            <th>Year and Section</th>
+                            <th>Subject</th>
+                            <th>Course, Year and Section</th>
                             <th class="text-center">Semester</th>
                             <th class="text-center">School Year</th>
                             <th class="text-center">Status</th>
@@ -78,15 +78,18 @@
 
                             <tr>
 
-                                <td>{{ $gradesheet->course }}</td>
+                                <td>{{ $gradesheet->g_subject }}</td>
                                 <td>{{ $gradesheet->year_and_section }}</td>
-                                <td class="text-center">{{ $gradesheet->semester }}</td>
+                                <td class="text-center">{{ $gradesheet->g_subject_semester }}</td>
                                 <td class="text-center">{{ $gradesheet->school_year }}</td>
-                                <td class="text-center">{{ $gradesheet->status }}</td> <!-- Status Here -->
+                                <td class="text-center">{{ $gradesheet->g_status }}</td> <!-- Status Here -->
                                 <td class="col-sm-1 gap-3">
                                     <button id="viewBtn" class="btn btn-secondary"><i class="fas fa-eye"></i></button>
-                                    <button id="editBtn" class="btn btn-secondary"><i class="fas fa-edit"></i></button>
-
+                                    @if($gradesheet->g_status == 'Unfinished')
+                                        <button id="editBtn" class="btn btn-secondary">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                    @endif
                                     <a id="generatePDF" class="btn btn-success">
                                         <i class="fas fa-file-pdf"></i>
                                         {{-- <span>

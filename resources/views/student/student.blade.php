@@ -84,14 +84,48 @@
                             <tr>
 
                                 <td>{{ $student->student_number }}</td>
-                                <td>{{ $student->last_name }}, {{ $student->first_name }} {{ $student->middle_name }}</td>
-                                <td class="text-center">{{ $student->program }}</td>
-                                <td class="text-center">{{ $student->curriculum }}</td>
+                                <td>{{ $student->student_lname }}, {{ $student->student_fname }} {{ $student->student_mname }}</td>
+                                <td class="text-center">{{ $student->student_program }}</td>
+                                <td class="text-center">{{ $student->student_curriculum }}</td>
                                 <td class="d-flex flex-row justify-content-center">
-                                    <button class="btn btn-secondary">View</button>
+                                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#viewStudent-{{$student->id}}">View</button>
                                 </td>
                                 <td hidden>{{ $student->id }}</td>
+                                    <div class="modal modal-blur fade" id="viewStudent-{{$student->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">{{$student->student_lname}}, {{$student->student_fname}} {{$student->student_mname}}</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <label class="form-label" for="student_suffix">Suffix</label>
+                                                    <input type="text" class="form-control" id="student_suffix" value="{{$student->student_suffix}}" disabled>
+                                                    
+                                                    <label class="form-label" for="has_hscard">Has Highschool Card</label>
+                                                    <input type="text" class="form-control" id="has_hscard" value="{{$student->has_hscard}}" disabled>
+                                                    
+                                                    <label class="form-label" for="has_birthcert">Has Birth Certificate</label>
+                                                    <input type="text" class="form-control" id="has_birthcert" value="{{$student->has_birthcert}}" disabled>
 
+                                                    <label class="form-label" for="has_f137">Has f137</label>
+                                                    <input type="text" class="form-control" id="has_f137" value="{{$student->has_f137}}" disabled>
+
+                                                    <label class="form-label" for="honorable_dismissal">Honorable Dismissal</label>
+                                                    <input type="text" class="form-control" id="honorable_dismissal" value="{{$student->honorable_dismissal}}" disabled>
+
+                                                    <label class="form-label" for="with_tor">With TOR?</label>
+                                                    <input type="text" class="form-control" id="with_tor" value="{{$student->with_tor}}" disabled>
+
+                                                    <label class="form-label" for="with_diploma">With Diploma?</label>
+                                                    <input type="text" class="form-control" id="with_diploma" value="{{$student->with_diploma}}" disabled>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                             </tr>
 
                         @endforeach
@@ -134,6 +168,7 @@
     </div>
 </div>
 
+
 @endsection
 
 @section('scripts')
@@ -144,7 +179,7 @@
         // Datatable initialization
         var students_table = $('#studentsTable').DataTable({
             paging: true,        // Enable paging
-            pageLength: 5,       // Set the limit to 5 entries per page
+            pageLength: 10,       // Set the limit to 5 entries per page
             info: false,         // Hide info (optional)
             lengthChange: false  // Hide the options for choosing page length
         });
@@ -169,21 +204,40 @@
         });
 
         // Handle Import button click
-        $('#import-btn').on('click', function() {
+        $('#import-btn').on('click', function () {
+            //const file = $('#xlsx-file').prop('files')[0];
+            const fileInput = $('#xlsx-file')[0];
+            const file = fileInput.files && fileInput.files[0]; // Get the selected file
+
+            if (!file) {
+                alert("Please select a file before importing.");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', file);
+
             $('#import-progress').show();
-            importFile().done(function() {
-                $('#import-progress').hide();
+
+            $.ajax({
+                url: "{{ route('students.import') }}",
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Include CSRF token
+                },
+                success: function (response) {
+                    alert("File imported successfully!");
+                    $('#import-progress').hide();
+                },
+                error: function (xhr, status, error) {
+                    alert("An error occurred during import: " + xhr.responseText);
+                    $('#import-progress').hide();
+                }
             });
         });
-
-        // Simulated import function to mimic file processing delay
-        function importFile() {
-            return $.Deferred(function(deferred) {
-                setTimeout(function() {
-                    deferred.resolve();
-                }, 2000); // Simulate a 2-second delay for file import
-            }).promise();
-        }
 
     });
 

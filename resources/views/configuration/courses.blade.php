@@ -55,17 +55,26 @@
                 <table id="coursesTable" class="table card-table table-vcenter text-nowrap datatable">
 
                     <thead>
-
+            
                         <tr>
-
-                            
+                          <th>Course Code</th>
+                          <th>Description</th>
 
                         </tr>
 
                     </thead>
 
                     <tbody>
-
+                        @foreach ($courses as $course)
+                          <tr>
+                            <td>
+                              {{$course->course_code}}
+                            </td>
+                            <td>
+                              {{$course->course_description}}
+                            </td>
+                          </tr>
+                        @endforeach
                         
                     </tbody>
                 </table>

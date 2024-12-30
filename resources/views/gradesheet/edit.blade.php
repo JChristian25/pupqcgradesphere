@@ -57,56 +57,57 @@
         <div class="card-body">
 
             <div class="col-md-12">
+
                 <div class="d-flex flex-row gap-3">
                     <div class="col-md-6">
                         <div class="d-flex flex-row gap-3">
                             <div class="col-md-8">
-                                <label class="form-label" for="select-users">Subject Description</label>
-                                <input type="text" class="form-control" id="edit_subjectDescription" value="{{$gradesheet->course}}">
-
+                                <label class="form-label" for="g_subject">Subject Description</label>
+                                <input class="form-control" id="g_subject" value="{{ $gradesheet->g_subject }}">
                             </div>
                             <div class="col-md-4 d-flex flex-column justify-content-end">
-                                <label class="form-label" for="code_number">Code Number</label>
-                                <input id="code_number" class="form-control" disabled placeholder="Code Number" value="" disabled>
+                                <label class="form-label" for="subject_code">Subject Number</label>
+                                <input id="subject_code" class="form-control" value="{{ $gradesheet->g_subject_code }}"> <!-- To add: Advanced Selector -->
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-4 ms-3">
-                        <label class="form-label" for="year-section">Year & Section</label>
-                        <input class="form-control" id="edit_yearSection" placeholder="Year & Section" value="{{ $gradesheet->year_and_section }}">
+                        <label class="form-label" for="year_and_section">Year & Section</label>
+                        <input class="form-control" id="year_and_section" value="{{ $gradesheet->year_and_section }}">
                     </div>
                     <div class="col-md-1">
-                        <label class="form-label" for="units">Units</label>
-                        <input class="form-control" id="edit_units" placeholder="Units" value="{{ $gradesheet->units }}">
+                        <label class="form-label" for="g_subject_units">Units</label>
+                        <input class="form-control" id="g_subject_units" value="{{ $gradesheet->g_subject_units }}">
                     </div>
                 </div>
 
                 <div class="d-flex flex-row gap-3 mt-3">
+
                     <div class="col-lg-2">
-                        <label class="form-label" for="time">Time</label>
-                        <input class="form-control" id="edit_time" placeholder="_:__ AM/PM - _:__ AM/PM" value="{{ $gradesheet->time }}">
+                        <label class="form-label" for="block_time">Time</label>
+                        <input class="form-control" id="block_time" value="{{ $gradesheet->block_time }}">
                     </div>
                     <div class="col-lg-3">
-                        <label class="form-label" for="room">Room</label>
-                        <input class="form-control" id="edit_room" placeholder="ACAD 103" value="{{ $gradesheet->room }}">
+                        <label class="form-label" for="block_room">Room</label>
+                        <input class="form-control" id="block_room" value="{{ $gradesheet->block_room }}">
                     </div>
                     <div class="col-lg-3">
                         <label class="form-label" for="select-semester" >Semester</label>
-                        <select type="text" class="form-control" id="edit_semester">
-                            <option value="" disabled {{ !$gradesheet->semester ? 'selected' : '' }}>Select Semester</option>
-                            <option value="1st Semester" {{ $gradesheet->semester === '1st Semester' ? 'selected' : '' }}>1st Semester</option>
-                            <option value="2nd Semester" {{ $gradesheet->semester === '2nd Semester' ? 'selected' : '' }}>2nd Semester</option>
-                            <option value="Summer" {{ $gradesheet->semester === 'Summer' ? 'selected' : '' }}>Summer</option>
+                        <select type="text" class="form-control" id="g_subject_semester">
+                            <option value="">Select Semester</option>
+                            <option value="1st Semester" {{ $gradesheet->g_subject_semester === '1st Semester' ? 'selected' : '' }}>1st Semester</option>
+                            <option value="2nd Semester" {{ $gradesheet->g_subject_semester === '2nd Semester' ? 'selected' : '' }}>2nd Semester</option>
+                            <option value="Summer" {{ $gradesheet->g_subject_semester === 'Summer' ? 'selected' : '' }}>Summer</option>
                         </select>
                     </div>
                     <div class="col-lg-3">
-                        <label class="form-label" for="edit_schoolYear">School Year</label>
-                        <input class="form-control" id="edit_schoolYear" placeholder="2021-2022" value="{{ $gradesheet->school_year }}">
+                        <label class="form-label" for="school_year">School Year</label>
+                        <input class="form-control" id="school_year" value="{{ $gradesheet->school_year }}">
                     </div>
-                </div>
-            </div>
 
+                </div>
+
+            </div>
 
         </div>
 
@@ -192,13 +193,14 @@
         console.log("Hello, world!");
 
         let gradesheetId = {{$gradesheet->id}};
-        let course = $("#edit_subjectDescription").val();
-        let yearSection = $("#edit_yearSection").val();
-        let units = $("#edit_units").val();
-        let time = $("#edit_time").val();
-        let room = $("#edit_room").val();
-        let semester = $("#edit_semester").val();
-        let schoolYear = $("#edit_schoolYear").val();
+        let g_subject = $('#g_subject').val();
+        let subject_code = $('#subject_code').val();
+        let year_and_section = $('#year_and_section').val();
+        let g_subject_units = $('#g_subject_units').val();
+        let block_time = $('#block_time').val();
+        let block_room = $('#block_room').val();
+        let g_subject_semester = $('#g_subject_semester').find('option:selected').val();
+        let school_year = $('#school_year').val();
 
         // Array to store students
         let students_in_gradesheet = [];
@@ -224,13 +226,14 @@
         // Data to be sent as JSON
         let data = {
             gradesheetId: gradesheetId,
-            course: course,
-            yearSection: yearSection,
-            units: units,
-            time: time,
-            room: room,
-            semester: semester,
-            schoolYear: schoolYear,
+            g_subject: g_subject,
+            subject_code: subject_code,
+            year_and_section: year_and_section,
+            g_subject_units: g_subject_units,
+            block_time: block_time,
+            block_room: block_room,
+            g_subject_semester: g_subject_semester,
+            school_year: school_year,
             students: students_in_gradesheet
         };
 
