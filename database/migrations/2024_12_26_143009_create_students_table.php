@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('student_suffix')->nullable();
 
             $table->string('has_hscard')->nullable();
-            $table->string('has_hscard')->nullable();
+            $table->string('has_birthcert')->nullable();
             $table->string('has_f137')->nullable();
 
             $table->string('honorable_dismissal')->nullable();
