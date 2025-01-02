@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Student extends Model
 {
-    
+
     use SoftDeletes;
     protected $dates = ['deleted_at'];
 
@@ -25,5 +25,6 @@ class Student extends Model
         'honorable_dismissal',
         'with_tor',
         'with_diploma',
+        'has_goodmoral',
     ];
 }

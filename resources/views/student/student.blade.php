@@ -91,41 +91,56 @@
                                     <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#viewStudent-{{$student->id}}">View</button>
                                 </td>
                                 <td hidden>{{ $student->id }}</td>
-                                    <div class="modal modal-blur fade" id="viewStudent-{{$student->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">{{$student->student_lname}}, {{$student->student_fname}} {{$student->student_mname}}</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <div class="modal modal-blur fade" id="viewStudent-{{$student->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header bg-primary text-white">
+                                                <h5 class="modal-title">{{$student->student_lname}}, {{$student->student_fname}} {{$student->student_mname}}</h5>
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row g-3">
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-bold" for="student_suffix">Suffix</label>
+                                                        <input type="text" class="form-control" id="student_suffix" value="{{$student->student_suffix}}" disabled>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-bold" for="has_hscard">Has Highschool Card</label>
+                                                        <input type="text" class="form-control" id="has_hscard" value="{{$student->has_hscard}}" disabled>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-bold" for="has_goodmoral">Has Good Moral</label>
+                                                        <input type="text" class="form-control" id="has_goodmoral" value="{{$student->has_goodmoral}}" disabled>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-bold" for="has_birthcert">Has Birth Certificate</label>
+                                                        <input type="text" class="form-control" id="has_birthcert" value="{{$student->has_birthcert}}" disabled>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-bold" for="has_f137">Has f137</label>
+                                                        <input type="text" class="form-control" id="has_f137" value="{{$student->has_f137}}" disabled>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-bold" for="honorable_dismissal">Honorable Dismissal</label>
+                                                        <input type="text" class="form-control" id="honorable_dismissal" value="{{$student->honorable_dismissal}}" disabled>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-bold" for="with_tor">With TOR?</label>
+                                                        <input type="text" class="form-control" id="with_tor" value="{{$student->with_tor}}" disabled>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="form-label fw-bold" for="with_diploma">With Diploma?</label>
+                                                        <input type="text" class="form-control" id="with_diploma" value="{{$student->with_diploma}}" disabled>
+                                                    </div>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <label class="form-label" for="student_suffix">Suffix</label>
-                                                    <input type="text" class="form-control" id="student_suffix" value="{{$student->student_suffix}}" disabled>
-                                                    
-                                                    <label class="form-label" for="has_hscard">Has Highschool Card</label>
-                                                    <input type="text" class="form-control" id="has_hscard" value="{{$student->has_hscard}}" disabled>
-                                                    
-                                                    <label class="form-label" for="has_birthcert">Has Birth Certificate</label>
-                                                    <input type="text" class="form-control" id="has_birthcert" value="{{$student->has_birthcert}}" disabled>
-
-                                                    <label class="form-label" for="has_f137">Has f137</label>
-                                                    <input type="text" class="form-control" id="has_f137" value="{{$student->has_f137}}" disabled>
-
-                                                    <label class="form-label" for="honorable_dismissal">Honorable Dismissal</label>
-                                                    <input type="text" class="form-control" id="honorable_dismissal" value="{{$student->honorable_dismissal}}" disabled>
-
-                                                    <label class="form-label" for="with_tor">With TOR?</label>
-                                                    <input type="text" class="form-control" id="with_tor" value="{{$student->with_tor}}" disabled>
-
-                                                    <label class="form-label" for="with_diploma">With Diploma?</label>
-                                                    <input type="text" class="form-control" id="with_diploma" value="{{$student->with_diploma}}" disabled>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn me-auto" data-bs-dismiss="modal">Close</button>
-                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+
                             </tr>
 
                         @endforeach

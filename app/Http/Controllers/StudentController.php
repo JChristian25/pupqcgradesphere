@@ -17,21 +17,24 @@ class StudentController extends Controller
         return view('student.student', compact('students'));
     }
 
-    
     public function importFromXLSX(Request $request)
     {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls,csv',
-        ]);
+        $file = $request->file('file'); // Get the uploaded file
+        $filePath = $file->getRealPath(); // Get the real path
 
-        Excel::import(new StudentImport, $request->file('file'));
+        // Pass the file path to the import class
+        $import = new StudentImport($filePath);
+        Excel::import($import, $filePath);
+
+        return back()->with('success', 'File imported successfully.');
     }
+
 
     public function add()
     {
         return view('student.add');
     }
-    
+
     public function store(Request $request)
     {
         // dd($request->all());
