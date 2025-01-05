@@ -17,6 +17,11 @@
         <link href="{{ asset('dist/css/demo.min.css?1692870487') }}" rel="stylesheet" />
         <link href="{{ asset('dist/libs/fontawsome/css/all.min.css') }}" rel="stylesheet" />
         <link href="{{ asset('dist/libs/fontawsome/css/regular.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('dist/libs/bootstrap-5.3.3-dist/css/bootstrap.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('dist/libs/DataTables/datatables.min.css') }}" rel="stylesheet" />
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
 
         <style>
             @import url('https://rsms.me/inter/inter.css');
@@ -34,9 +39,9 @@
     <script src="{{ asset('dist/js/demo-theme.min.js?1692870487') }}"></script>
     <script src="{{ asset('dist/libs/fontawsome/js/all.min.js') }}"></script>
     <script src="{{ asset('dist/libs/fontawsome/js/regular.min.js') }}"></script>
-    
+
         <div class="page">
-          
+
 
             <div class="page-wrapper">
 
@@ -69,18 +74,14 @@
         </div>
             <!-- Libs JS -->
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
         <script src="{{ asset('dist/libs/nouislider/dist/nouislider.min.js?1692870487') }}" defer></script>
         <script src="{{ asset('dist/libs/litepicker/dist/litepicker.js?1692870487') }}" defer></script>
         <script src="{{ asset('dist/libs/tom-select/dist/js/tom-select.base.min.js?1692870487') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        {{-- <script src="../dist/libs/apexcharts/dist/apexcharts.min.js?1692870487" defer></script>
-        <script src="../dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487" defer></script>
-        <script src="../dist/libs/jsvectormap/dist/maps/world.js?1692870487" defer></script>
-        <script src="../dist/libs/jsvectormap/dist/maps/world-merc.js?1692870487" defer></script> --}}
-        <!-- Tabler Core -->
         <script src="{{ asset('dist/js/tabler.min.js?1692870487') }}" defer></script>
         <script src="{{ asset('dist/js/demo.min.js?1692870487') }}" defer></script>
+        <script src="{{ asset('dist/libs/bootstrap-5.3.3-dist/js/bootstrap.min.js') }}" ></script>
+        <script src="{{ asset('dist/libs/DataTables/datatables.min.js') }}"></script>
 
         @yield('scripts')
     </body>

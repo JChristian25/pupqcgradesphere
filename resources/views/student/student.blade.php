@@ -37,19 +37,32 @@
                   </div>
             </div>
 
-            <div class="flex-row ms-auto">
-
-                <a href="{{ route('students.add') }}" class="btn btn-primary ms-auto">
-                    <span>
-                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M16 19h6" /><path d="M19 16v6" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4" /></svg>
-                    </span>
-                    <span>Add Student</span>
+            <div class="d-flex ms-auto">
+                <!-- Add Button -->
+                <a href="{{ route('students.add') }}" class="btn btn-primary d-flex items-center me-2" aria-label="Add Student">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/>
+                        <path d="M16 19h6"/>
+                        <path d="M19 16v6"/>
+                        <path d="M6 21v-2a4 4 0 0 1 4 -4h4"/>
+                    </svg>
+                    <span>Add</span>
                 </a>
 
-                <button class="btn btn-warning ms-auto" data-bs-toggle="modal" data-bs-target="#importxlsx">
-                    <span>
-                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-csv"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" /><path d="M7 16.5a1.5 1.5 0 0 0 -3 0v3a1.5 1.5 0 0 0 3 0" /><path d="M10 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75" /><path d="M16 15l2 6l2 -6" /></svg>                    </span>
-                    <span>Import XLSX</span>
+
+
+                <!-- Import Button -->
+                <button class="btn btn-warning d-flex items-center" data-bs-toggle="modal" data-bs-target="#importxlsx" aria-label="Import CSV">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+                        <path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4"/>
+                        <path d="M7 16.5a1.5 1.5 0 0 0 -3 0v3a1.5 1.5 0 0 0 3 0"/>
+                        <path d="M10 20.25c0 .414 .336 .75 .75 .75h1.25a1 1 0 0 0 1 -1v-1a1 1 0 0 0 -1 -1h-1a1 1 0 0 1 -1 -1v-1a1 1 0 0 1 1 -1h1.25a.75 .75 0 0 1 .75 .75"/>
+                        <path d="M16 15l2 6l2 -6"/>
+                    </svg>
+                    <span>Import</span>
                 </button>
 
             </div>
@@ -87,8 +100,9 @@
                                 <td>{{ $student->student_lname }}, {{ $student->student_fname }} {{ $student->student_mname }}</td>
                                 <td class="text-center">{{ $student->student_program }}</td>
                                 <td class="text-center">{{ $student->student_curriculum }}</td>
-                                <td class="d-flex flex-row justify-content-center">
-                                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#viewStudent-{{$student->id}}">View</button>
+                                <td class="d-flex flex-row justify-content-center gap-x-1">
+                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewStudent-{{$student->id}}"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-danger delete-student" data-student-id="{{ $student->id }}"><i class="fas fa-trash-alt"></i></button>
                                 </td>
                                 <td hidden>{{ $student->id }}</td>
                                 <div class="modal modal-blur fade" id="viewStudent-{{$student->id}}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -192,15 +206,40 @@
 
     $(document).ready(function (){
         // Datatable initialization
-        var students_table = $('#studentsTable').DataTable({
-            paging: true,        // Enable paging
-            pageLength: 10,       // Set the limit to 5 entries per page
-            info: false,         // Hide info (optional)
-            lengthChange: false  // Hide the options for choosing page length
+        $('.delete-student').on('click', function() {
+            var studentId = $(this).data('student-id');
+            var url = '{{ route("students.destroy", ":id") }}';
+            url = url.replace(':id', studentId);
+
+            if (confirm('Are you sure you want to delete this student?')) {
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        alert('Student deleted successfully.');
+                        location.reload();
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred while deleting the student.');
+                    }
+                });
+            }
         });
 
-        $('#studentsTable_paginate').hide();
+        var students_table = $('#studentsTable').DataTable({
+            searching: true,     // Disable search functionality
+            info: false,          // Disable table information (e.g., "Showing 1 to 10 of 100")
+            lengthChange: false,  // Disable the option to change the page length
+            pageLength: 10,       // Set the table to display 10 rows at once
+            autoWidth: false,
+        });
 
+        $('.dt-search').hide();
+
+        $('.dt-paging').hide();
         $('.dataTables_filter').hide();
 
         $('#students_searchbar').keyup(function() {

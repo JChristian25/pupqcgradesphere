@@ -26,7 +26,7 @@ Route::prefix('student')->group(function () {
     Route::get('/', [StudentController::class, 'index'])->name('students');
     Route::get('/add', [StudentController::class, 'add'])->name('students.add');
     Route::post('/store', [StudentController::class, 'store'])->name('students.store');
-
+    Route::delete('/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
     // For importing...
     Route::post('/import', [StudentController::class, 'importFromXLSX'])->name('students.import');
 });
@@ -38,6 +38,7 @@ Route::prefix('gradesheet')->group(function () {
     Route::post('/store', [GradesheetController::class, 'store'])->name('gradesheets.store');
     Route::get('/view/{id}', [GradesheetController::class, 'show'])->name('gradesheets.show');
     Route::get('/pdf/{id}', [GradesheetController::class, 'generatepdf'])->name('gradesheet.generate');
+    Route::delete('/{id}', [GradesheetController::class, 'destroy'])->name('gradesheet.destroy');
     Route::get('/{id}/edit', [GradesheetController::class, 'edit'])->name('gradesheet.edit');
     Route::put('/', [GradesheetController::class, 'update'])->name('gradesheet.update');
 
@@ -60,6 +61,8 @@ Route::prefix('subjects')->group(function () {
 Route::prefix('curriculum')->group(function () {
     Route::get('/', [CurriculumController::class, 'index'])->name('curriculums');
     Route::get('/add', [CurriculumController::class, 'add'])->name('curriculums.add');
+    // For importing...
+    Route::post('/import', [CurriculumController::class, 'import'])->name('curriculum.import');
 });
 /*****************************
 == END ====================

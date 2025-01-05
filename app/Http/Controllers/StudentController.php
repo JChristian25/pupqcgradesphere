@@ -17,6 +17,14 @@ class StudentController extends Controller
         return view('student.student', compact('students'));
     }
 
+    public function destroy($id)
+    {
+        $student = Student::findOrFail($id);
+        $student->delete();
+
+        return response()->json(['success' => 'Student deleted successfully.']);
+    }
+
     public function importFromXLSX(Request $request)
     {
         $file = $request->file('file'); // Get the uploaded file
@@ -53,6 +61,7 @@ class StudentController extends Controller
             'with_diploma'   => 'nullable|string|max:255',
             'student_program'   => 'nullable|string|max:255',
             'student_curriculum'   => 'nullable|string|max:255',
+            'has_goodmoral' => 'nullable|string|max:255',
         ]);
 
         $student = Student::create($validatedData);

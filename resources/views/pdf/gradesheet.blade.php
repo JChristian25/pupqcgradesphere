@@ -5,7 +5,7 @@
     <title>Grade Sheet</title>
     <style>
         body {
-            font-family: Verdana, Geneva, Tahoma, sans-serif
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
             font-size: 12px;
             margin: 0;
             padding: 0;
@@ -18,7 +18,7 @@
             padding: 10px;
         }
         h1, h2 {
-            font-family: 'Times New Roman', Times, serif
+            font-family: 'Times New Roman', Times, serif;
             margin: 5px 0;
         }
         .header, .footer {
@@ -80,19 +80,39 @@
             </thead>
             <tbody>
                 <?php
-
                     $count = 1;
-
                 ?>
                 @foreach ($studentGradesheet as $student)
+
+                <?php
+                    $first = $student->first_grading;
+                    $second = $student->second_grading;
+                    $final = $student->final_rating;
+
+                    if ($first === 'INC') {
+                        $second = $second === 'INC' ? 'INC' : $second;
+                        $final = !empty($final) ? "$final/INC" : 'INC';
+                    }
+
+                    if ($first === 'D' || $second === 'D' || $final === 'D') {
+                        $second = $second === 'D' ? 'D' : (empty($second) ? '' : 'D');
+                        $final = 'D';
+                    }
+
+                    if ($first === 'W' || $second === 'W' || $final === 'W') {
+                        $second = $second === 'W' ? 'W' : (empty($second) ? '' : 'W');
+                        $final = 'W';
+                    }
+                ?>
+
 
                 <tr style="font-size: 7pt;">
                     <td>{{ $student->student_number }}</td>
                     <td style="font-size: 9pt;"><strong>{{ $count++ }}</strong></td>
-                    <td style="text-align: left;">{{ $student->last_name }}, {{ $student->first_name }} {{ $student->middle_name }}</td>
-                    <td>{{ $student->first_grading }}</td>
-                    <td>{{ $student->second_grading }}</td>
-                    <td>{{ $student->final_rating }}</td>
+                    <td style="text-align: left;">{{ $student->student_lname}}, {{ $student->student_fname }} {{ $student->student_mname }}</td>
+                    <td>{{ $first }}</td>
+                    <td>{{ $second }}</td>
+                    <td>{{ $final }}</td>
                     <td></td>
                     <td>{{ $student->remarks }}</td>
                 </tr>
@@ -113,16 +133,16 @@
 
         <table class="small-note">
             <tr>
-                <td>Code Number:</td>
-                <td>Course Description:</td>
-                <td>Number of Units:</td>
+                <td>Code Number:{{$gradesheet->g_subject_code}}</td>
+                <td>Course Description:{{$gradesheet->g_subject}}</td>
+                <td>Number of Units:{{$gradesheet->g_subject_units}}</td>
             </tr>
             <tr>
-                <td>Year & Section:</td>
-                <td>Time:</td>
-                <td>Room:</td>
-                <td>Semester:</td>
-                <td>School Year:</td>
+                <td>Year & Section:{{$gradesheet->year_and_section}}</td>
+                <td>Time:{{$gradesheet->block_time}}</td>
+                <td>Room:{{$gradesheet->block_room}}</td>
+                <td>Semester:{{$gradesheet->g_subject_semester}}</td>
+                <td>School Year:{{$gradesheet->school_year}}</td>
             </tr>
         </table>
 

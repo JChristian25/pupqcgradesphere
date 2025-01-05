@@ -17,7 +17,7 @@
                 <!-- Page title actions -->
               </div>
               <div class="ms-auto">
-                <a href="{{ route('gradesheets') }}" class="btn btn-secondary">
+                <a href="{{ route('gradesheets') }}" class="btn btn-secondary ms-auto d-flex items-center">
                     <span>
                         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-arrow-narrow-left"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /><path d="M5 12l4 4" /><path d="M5 12l4 -4" /></svg>
                     </span>
@@ -42,15 +42,28 @@
 
             </h3>
 
-            <div class="ms-auto">
+            <div class="ms-auto d-flex align-items-center space-x-1">
 
-                <a id="update_gradesheet" class="btn btn-success">
-                    <span>
-                        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-file-type-pdf"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M5 12v-7a2 2 0 0 1 2 -2h7l5 5v4" /><path d="M5 18h1.5a1.5 1.5 0 0 0 0 -3h-1.5v6" /><path d="M17 18h2" /><path d="M20 15h-3v6" /><path d="M11 15v6h1a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2h-1z" /></svg>                    </span>
+                <a id="save-temp-btn" class="btn btn-success d-flex align-items-center" aria-label="Save">
                     <span>Save</span>
                 </a>
 
+                <a id="update_gradesheet" class="btn btn-primary d-flex align-items-center" aria-label="Send for Checking">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M10 20.777a8.942 8.942 0 0 1 -2.48 -.969"/>
+                        <path d="M14 3.223a9.003 9.003 0 0 1 0 17.554"/>
+                        <path d="M4.579 17.093a8.961 8.961 0 0 1 -1.227 -2.592"/>
+                        <path d="M3.124 10.5c.16 -.95 .468 -1.85 .9 -2.675l.169 -.305"/>
+                        <path d="M6.907 4.579a8.954 8.954 0 0 1 3.093 -1.356"/>
+                        <path d="M12 9v6"/>
+                        <path d="M15 12l-3 3l-3 -3"/>
+                    </svg>
+                    <span>Send for Checking</span>
+                </a>
+
             </div>
+
 
         </div>
 
@@ -201,6 +214,7 @@
         let block_room = $('#block_room').val();
         let g_subject_semester = $('#g_subject_semester').find('option:selected').val();
         let school_year = $('#school_year').val();
+        let g_status = 'For Checking';
 
         // Array to store students
         let students_in_gradesheet = [];
@@ -234,7 +248,99 @@
             block_room: block_room,
             g_subject_semester: g_subject_semester,
             school_year: school_year,
-            students: students_in_gradesheet
+            students: students_in_gradesheet,
+            g_status: g_status
+        };
+
+        // Logging data to check what is being sent
+        console.log(data);
+
+        $.ajax({
+            url: '{{ route("gradesheet.update") }}',
+            type: 'PUT',
+            data: JSON.stringify(data), // Send the data as JSON
+            contentType: 'application/json', // Set the content type to JSON
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')  // Adding CSRF token manually
+            },
+            success: function(response) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Gradesheet updated successfully',
+                    icon: 'success',
+                    confirmButtonText: 'Continue'
+                }).then((result) => {
+                    window.location.reload();
+                });
+            },
+            error: function(xhr, status, error) {
+                console.error('Error in request:', error);
+                // Log detailed error information
+                console.error('Status:', status);
+                console.error('Status Code:', xhr.status);
+                console.error('Response Text:', xhr.responseText);
+                console.error('Validation Errors:', xhr.responseJSON.errors);
+
+                Swal.fire({
+                    title: 'Oops!',
+                    text: 'Error updating gradesheet :(',
+                    icon: 'error',
+                    confirmButtonText: 'Continue'
+                }).then((result) => {
+                    window.location.reload();
+                });
+            }
+        });
+    });
+
+    $(document).on('click', '#save-temp-btn', function() {
+        console.log("Hello, world!");
+
+        let gradesheetId = {{$gradesheet->id}};
+        let g_subject = $('#g_subject').val();
+        let subject_code = $('#subject_code').val();
+        let year_and_section = $('#year_and_section').val();
+        let g_subject_units = $('#g_subject_units').val();
+        let block_time = $('#block_time').val();
+        let block_room = $('#block_room').val();
+        let g_subject_semester = $('#g_subject_semester').find('option:selected').val();
+        let school_year = $('#school_year').val();
+        let g_status = 'Unfinished';
+
+        // Array to store students
+        let students_in_gradesheet = [];
+
+        $('#studentsGradesheetTable tbody tr').each(function() {
+            let row = $(this);
+
+            let id = $(row.find("td")[6]).text();
+            let firstGradeValue = row.find('.firstgrading').val();
+            let secondGradeValue = row.find('.secondgrading').val();
+            let finalGradeValue = row.find('.finalgrading').val();
+            let remarksValue = row.find('.remarks').val();
+
+            students_in_gradesheet.push({
+                id: id,
+                firstGrade: firstGradeValue,
+                secondGrade: secondGradeValue,
+                finalGrade: finalGradeValue,
+                remarks: remarksValue
+            });
+        });
+
+        // Data to be sent as JSON
+        let data = {
+            gradesheetId: gradesheetId,
+            g_subject: g_subject,
+            subject_code: subject_code,
+            year_and_section: year_and_section,
+            g_subject_units: g_subject_units,
+            block_time: block_time,
+            block_room: block_room,
+            g_subject_semester: g_subject_semester,
+            school_year: school_year,
+            students: students_in_gradesheet,
+            g_status: g_status
         };
 
         // Logging data to check what is being sent
